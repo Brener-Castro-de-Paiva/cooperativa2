@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <!-- ==========================================
+         01 — CONFIGURAÇÕES DA PÁGINA
+         ========================================== -->
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta name="theme-color" content="#102d3c">
+
+    <meta name="robots" content="noindex, nofollow">
+
+    <meta
+        name="description"
+        content="Documentos do cooperado e biblioteca institucional da COJURIS."
+    >
+
+    <title>Documentos | COJURIS</title>
+
+    <!-- Base visual compartilhada com Comunicados -->
+    <link rel="stylesheet" href="./css/comunicados.css">
+    <link rel="stylesheet" href="./css/recursos.css">
+</head>
+
+<body>
+
+    <!-- ==========================================
+         02 — VERIFICAÇÃO DE ACESSO
+         ========================================== -->
+
+    <section id="tela-acesso" class="tela-acesso">
+
+        <div class="acesso-card">
+
+            <div class="logo-simbolo">✦</div>
+
+            <h1>COJURIS</h1>
+
+            <p id="mensagem-acesso" role="status">
+                Verificando sua autorização...
+            </p>
+
+            <a href="./painel.html">
+                Voltar ao meu painel
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <!-- ==========================================
+         03 — CONTEÚDO PROTEGIDO
+         ========================================== -->
+
+    <main id="aplicacao" class="container" hidden>
+
+        <header class="cabecalho">
+
+            <div class="identidade">
+
+                <span class="marca">✦ COJURIS</span>
+
+                <p class="subtitulo">ESPAÇO DO COOPERADO</p>
+
+                <h1>Documentos</h1>
+
+                <p class="descricao">
+                    Envie seus documentos com segurança e
+                    baixe os materiais publicados pela COJURIS.
+                </p>
+
+            </div>
+
+            <nav class="navegacao" aria-label="Navegação principal">
+
+                <a href="./comunidade.html">Comunidade</a>
+
+                <a href="./mural.html">Mural</a>
+
+                <a href="./painel.html">Meu painel</a>
+
+                <a
+                    href="./admin.html"
+                    id="link-administracao"
+                    hidden
+                >Administração</a>
+
+            </nav>
+
+        </header>
+
+
+        <div class="faixa-acesso">
+
+            <span id="perfil-acesso">Comunidade COJURIS</span>
+
+            <span>Arquivos aceitos: PDF, Word, Excel, ODT, JPG, PNG e TXT</span>
+
+        </div>
+
+
+        <!-- ======================================
+             04 — ABAS
+             ====================================== -->
+
+        <div class="cj-abas" role="tablist" aria-label="Seções de documentos">
+
+            <button
+                id="aba-pessoal"
+                class="cj-aba"
+                type="button"
+                role="tab"
+                aria-selected="true"
+                aria-controls="painel-pessoal"
+            >Minha pasta</button>
+
+            <button
+                id="aba-biblioteca"
+                class="cj-aba"
+                type="button"
+                role="tab"
+                aria-selected="false"
+                aria-controls="painel-biblioteca"
+                tabindex="-1"
+            >Biblioteca</button>
+
+        </div>
+
+
+        <!-- ======================================
+             05 — PASTA PESSOAL
+             Visível apenas para o cooperado e
+             para a administração.
+             ====================================== -->
+
+        <section
+            id="painel-pessoal"
+            class="secao-comunicados"
+            role="tabpanel"
+            aria-labelledby="aba-pessoal"
+        >
+
+            <div class="cabecalho-listagem">
+
+                <div>
+                    <p class="rotulo">PRIVADO</p>
+                    <h2 id="titulo-pessoal">Minha pasta</h2>
+                    <p class="cj-ajuda" id="ajuda-pessoal">
+                        Somente você e a administração da COJURIS
+                        veem estes arquivos.
+                    </p>
+                </div>
+
+            </div>
+
+            <!-- Apenas administradores: escolher a pasta -->
+            <div id="seletor-cooperado" class="campo" hidden>
+                <label for="cooperado">Pasta do cooperado</label>
+                <select id="cooperado" class="cj-campo"></select>
+            </div>
+
+            <div id="conteudo-pessoal"></div>
+
+        </section>
+
+
+        <!-- ======================================
+             06 — BIBLIOTECA INSTITUCIONAL
+             ====================================== -->
+
+        <section
+            id="painel-biblioteca"
+            class="secao-comunicados"
+            role="tabpanel"
+            aria-labelledby="aba-biblioteca"
+            hidden
+        >
+
+            <div class="cabecalho-listagem">
+
+                <div>
+                    <p class="rotulo">INSTITUCIONAL</p>
+                    <h2>Biblioteca</h2>
+                    <p class="cj-ajuda">
+                        Modelos, manuais e materiais publicados
+                        pela administração para todos os cooperados.
+                    </p>
+                </div>
+
+            </div>
+
+            <div id="conteudo-biblioteca"></div>
+
+        </section>
+
+
+        <footer class="rodape">
+            <span>© COJURIS · Comunidade profissional</span>
+            <span>Ética, colaboração e confiança.</span>
+        </footer>
+
+    </main>
+
+
+    <script type="module" src="./js/documentos.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,67 @@
+// ============================================================
+// COJURIS — REGRAS DO FIREBASE STORAGE
+//
+// COMO USAR
+// Console do Firebase → Storage → Regras → substitua tudo
+// por este conteúdo e clique em "Publicar".
+//
+// Na primeira publicação, o console pede permissão para o
+// Storage consultar o Firestore (necessário para saber quem
+// é administrador e quem tem cadastro ativo). Aceite.
+// ============================================================
+
+rules_version = '2';
+
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    function logado() {
+      return request.auth != null;
+    }
+
+    function ehAdmin() {
+      return logado()
+        && firestore.exists(/databases/(default)/documents/administradores/$(request.auth.uid))
+        && firestore.get(/databases/(default)/documents/administradores/$(request.auth.uid)).data.ativo == true;
+    }
+
+    function cadastroAtivo() {
+      return logado()
+        && firestore.exists(/databases/(default)/documents/interessados/$(request.auth.uid))
+        && firestore.get(/databases/(default)/documents/interessados/$(request.auth.uid)).data.status in ["pendente", "aprovado"];
+    }
+
+    // PDF, Word, Excel, ODT, JPG, PNG e TXT
+    function tipoAceito() {
+      return request.resource.contentType.matches(
+        'application/pdf|image/(jpeg|png)|text/plain|application/(msword|vnd\\.ms-excel|vnd\\.openxmlformats-officedocument\\..+|vnd\\.oasis\\.opendocument\\.text|octet-stream)'
+      );
+    }
+
+    function tamanhoAte(mb) {
+      return request.resource.size <= mb * 1024 * 1024;
+    }
+
+
+    // Pasta pessoal: o próprio cooperado e a administração
+    match /pessoais/{dono}/{arquivo} {
+      allow read: if ehAdmin()
+        || (request.auth.uid == dono && cadastroAtivo());
+      allow create: if (ehAdmin()
+          || (request.auth.uid == dono && cadastroAtivo()))
+        && tipoAceito()
+        && tamanhoAte(10);
+      allow delete: if ehAdmin() || request.auth.uid == dono;
+      allow update: if false;
+    }
+
+
+    // Biblioteca: todos com cadastro ativo leem; só a administração altera
+    match /biblioteca/{arquivo} {
+      allow read: if ehAdmin() || cadastroAtivo();
+      allow create: if ehAdmin() && tipoAceito() && tamanhoAte(25);
+      allow delete: if ehAdmin();
+      allow update: if false;
+    }
+  }
+}

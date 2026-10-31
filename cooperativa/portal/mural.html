@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <!-- ==========================================
+         01 — CONFIGURAÇÕES DA PÁGINA
+         ========================================== -->
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta name="theme-color" content="#102d3c">
+
+    <meta name="robots" content="noindex, nofollow">
+
+    <meta
+        name="description"
+        content="Mural de conversas entre os cooperados da COJURIS."
+    >
+
+    <title>Mural | COJURIS</title>
+
+    <link rel="stylesheet" href="./css/comunicados.css">
+    <link rel="stylesheet" href="./css/recursos.css">
+</head>
+
+<body>
+
+    <!-- ==========================================
+         02 — VERIFICAÇÃO DE ACESSO
+         ========================================== -->
+
+    <section id="tela-acesso" class="tela-acesso">
+
+        <div class="acesso-card">
+
+            <div class="logo-simbolo">✦</div>
+
+            <h1>COJURIS</h1>
+
+            <p id="mensagem-acesso" role="status">
+                Verificando sua autorização...
+            </p>
+
+            <a href="./painel.html">
+                Voltar ao meu painel
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <!-- ==========================================
+         03 — CONTEÚDO PROTEGIDO
+         ========================================== -->
+
+    <main id="aplicacao" class="container" hidden>
+
+        <header class="cabecalho">
+
+            <div class="identidade">
+
+                <span class="marca">✦ COJURIS</span>
+
+                <p class="subtitulo">REDE PROFISSIONAL</p>
+
+                <h1>Mural da comunidade</h1>
+
+                <p class="descricao">
+                    Compartilhe dúvidas, experiências e
+                    oportunidades com os demais cooperados.
+                </p>
+
+            </div>
+
+            <nav class="navegacao" aria-label="Navegação principal">
+
+                <a href="./comunidade.html">Comunidade</a>
+
+                <a href="./documentos.html">Documentos</a>
+
+                <a href="./painel.html">Meu painel</a>
+
+                <a
+                    href="./admin.html"
+                    id="link-administracao"
+                    hidden
+                >Administração</a>
+
+            </nav>
+
+        </header>
+
+
+        <div class="faixa-acesso">
+
+            <span id="perfil-acesso">Comunidade COJURIS</span>
+
+            <span>Mantenha o sigilo profissional: não publique dados de clientes.</span>
+
+        </div>
+
+
+        <!-- ======================================
+             04 — NOVA PUBLICAÇÃO
+             Apenas profissionais verificados
+             e administração.
+             ====================================== -->
+
+        <section
+            id="area-publicar"
+            class="painel-publicacao"
+            aria-labelledby="titulo-publicar"
+            hidden
+        >
+
+            <div class="cabecalho-secao">
+                <p class="rotulo">PARTICIPAÇÃO</p>
+                <h2 id="titulo-publicar">Nova publicação</h2>
+            </div>
+
+            <form id="form-mural">
+
+                <div class="campo">
+
+                    <label for="texto-mural">O que você quer compartilhar?</label>
+
+                    <textarea
+                        id="texto-mural"
+                        name="texto"
+                        rows="4"
+                        minlength="3"
+                        maxlength="5000"
+                        placeholder="Escreva sua publicação"
+                        required
+                    ></textarea>
+
+                </div>
+
+                <div class="acoes-formulario">
+
+                    <button id="btn-publicar" class="botao-primario" type="submit">
+                        Publicar
+                    </button>
+
+                </div>
+
+            </form>
+
+        </section>
+
+
+        <p id="aviso-leitura" class="cj-aviso" hidden>
+            Você pode ler o mural. Publicar e comentar ficam disponíveis
+            após a verificação profissional do seu cadastro.
+        </p>
+
+
+        <!-- ======================================
+             05 — PUBLICAÇÕES
+             ====================================== -->
+
+        <section class="secao-comunicados" aria-labelledby="titulo-lista">
+
+            <div class="cabecalho-listagem">
+
+                <div>
+                    <p class="rotulo">CONVERSAS</p>
+                    <h2 id="titulo-lista">Publicações recentes</h2>
+                </div>
+
+                <button id="btn-atualizar" type="button" class="botao-secundario">
+                    Atualizar
+                </button>
+
+            </div>
+
+            <p
+                id="mensagem-lista"
+                class="mensagem-listagem"
+                role="status"
+                aria-live="polite"
+            ></p>
+
+            <div id="lista-mural" class="lista-comunicados"></div>
+
+            <button
+                id="btn-mais"
+                type="button"
+                class="botao-secundario botao-carregar"
+                hidden
+            >Carregar mais publicações</button>
+
+        </section>
+
+
+        <footer class="rodape">
+            <span>© COJURIS · Comunidade profissional</span>
+            <span>Ética, colaboração e confiança.</span>
+        </footer>
+
+    </main>
+
+
+    <script type="module" src="./js/mural.js"></script>
+
+</body>
+
+</html>

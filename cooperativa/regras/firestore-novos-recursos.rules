@@ -1,0 +1,153 @@
+// ============================================================
+// COJURIS — REGRAS DO FIRESTORE PARA OS NOVOS RECURSOS
+//
+// COMO USAR
+// Console do Firebase → Firestore Database → Regras.
+// Cole as FUNÇÕES e os blocos "match" abaixo DENTRO do bloco
+// já existente:
+//
+//   service cloud.firestore {
+//     match /databases/{database}/documents {
+//        ... suas regras atuais ...
+//        ... cole aqui ...
+//     }
+//   }
+//
+// Se alguma função já existir com o mesmo nome, mantenha
+// apenas uma. Depois clique em "Publicar".
+//
+// Sem estas regras, comentários, mural e documentos
+// serão recusados com "permissão negada".
+//
+// ATENÇÃO: estas regras confiam no campo "status" de
+// interessados/{uid}. Garanta, quando revisar a segurança,
+// que o próprio usuário não consiga alterar status nem
+// verificacaoProfissional.
+// ============================================================
+
+
+    // ---------- Funções de apoio ----------
+
+    function cjLogado() {
+      return request.auth != null;
+    }
+
+    function cjEhAdmin() {
+      return cjLogado()
+        && exists(/databases/$(database)/documents/administradores/$(request.auth.uid))
+        && get(/databases/$(database)/documents/administradores/$(request.auth.uid)).data.ativo == true;
+    }
+
+    function cjCadastro() {
+      return get(/databases/$(database)/documents/interessados/$(request.auth.uid)).data;
+    }
+
+    function cjTemCadastro() {
+      return cjLogado()
+        && exists(/databases/$(database)/documents/interessados/$(request.auth.uid));
+    }
+
+    // Pendente ou aprovado: pode ler
+    function cjPodeLer() {
+      return cjEhAdmin()
+        || (cjTemCadastro() && cjCadastro().status in ["pendente", "aprovado"]);
+    }
+
+    // Aprovado e verificado: pode publicar e comentar
+    function cjParticipa() {
+      return cjEhAdmin()
+        || (cjTemCadastro()
+            && cjCadastro().status == "aprovado"
+            && cjCadastro().verificacaoProfissional == "verificada");
+    }
+
+    function cjAutoriaValida() {
+      return request.resource.data.autorUid == request.auth.uid
+        && request.resource.data.autorNome is string
+        && request.resource.data.autorNome.size() <= 150
+        && request.resource.data.criadoEm == request.time;
+    }
+
+    function cjTexto(minimo, maximo) {
+      return request.resource.data.texto is string
+        && request.resource.data.texto.size() >= minimo
+        && request.resource.data.texto.size() <= maximo;
+    }
+
+    function cjComentarioValido() {
+      return cjParticipa()
+        && cjAutoriaValida()
+        && cjTexto(1, 2000)
+        && request.resource.data.keys().hasOnly(
+             ["texto", "autorUid", "autorNome", "criadoEm"]);
+    }
+
+    function cjAutorOuAdmin() {
+      return cjEhAdmin() || resource.data.autorUid == request.auth.uid;
+    }
+
+    function cjDocumentoValido(prefixo) {
+      return cjAutoriaValida()
+        && request.resource.data.keys().hasOnly([
+             "titulo", "descricao", "nomeArquivo", "tipo",
+             "tamanho", "caminho", "autorUid", "autorNome", "criadoEm"])
+        && request.resource.data.titulo is string
+        && request.resource.data.titulo.size() <= 150
+        && request.resource.data.tamanho is int
+        && request.resource.data.caminho is string
+        && request.resource.data.caminho.matches(prefixo + "/.+");
+    }
+
+
+    // ---------- Comentários nos comunicados ----------
+
+    match /comunicados/{comunicadoId}/comentarios/{comentarioId} {
+      allow read: if cjPodeLer();
+      allow create: if cjComentarioValido();
+      allow delete: if cjAutorOuAdmin();
+      allow update: if false;
+    }
+
+
+    // ---------- Mural e seus comentários ----------
+
+    match /mural/{publicacaoId} {
+      allow read: if cjPodeLer();
+      allow create: if cjParticipa()
+        && cjAutoriaValida()
+        && cjTexto(3, 5000)
+        && request.resource.data.keys().hasOnly(
+             ["texto", "autorUid", "autorNome", "criadoEm"]);
+      allow delete: if cjAutorOuAdmin();
+      allow update: if false;
+
+      match /comentarios/{comentarioId} {
+        allow read: if cjPodeLer();
+        allow create: if cjComentarioValido();
+        allow delete: if cjAutorOuAdmin();
+        allow update: if false;
+      }
+    }
+
+
+    // ---------- Pasta pessoal ----------
+
+    match /documentos_pessoais/{dono}/itens/{documentoId} {
+      allow read: if cjEhAdmin()
+        || (request.auth.uid == dono && cjPodeLer());
+      allow create: if (cjEhAdmin()
+          || (request.auth.uid == dono && cjPodeLer()))
+        && cjDocumentoValido("pessoais/" + dono);
+      allow delete: if cjAutorOuAdmin();
+      allow update: if false;
+    }
+
+
+    // ---------- Biblioteca ----------
+
+    match /biblioteca/{documentoId} {
+      allow read: if cjPodeLer();
+      allow create: if cjEhAdmin() && cjDocumentoValido("biblioteca");
+      allow delete: if cjEhAdmin();
+      allow update: if false;
+    }

@@ -1,0 +1,451 @@
+/* ============================================================
+   COJURIS — NOVOS RECURSOS DO PORTAL
+
+   ARQUIVO: portal/css/recursos.css
+
+   Usado em: documentos.html, mural.html, comunicados.html
+   e comunidade.html (área de comentários).
+
+   Todas as classes começam com "cj-" para não interferir
+   nos estilos já existentes. As cores têm valores reserva
+   para funcionar com qualquer folha de estilos base.
+
+   01 — Tokens
+   02 — Abas
+   03 — Campos e botões
+   04 — Envio de arquivos
+   05 — Lista de documentos
+   06 — Comentários
+   07 — Mural
+   08 — Modo de demonstração
+   09 — Responsividade
+   ============================================================ */
+
+
+/* 01 — TOKENS ------------------------------------------------ */
+
+:root {
+    --cj-azul: var(--azul, #173a4c);
+    --cj-turquesa: var(--turquesa, #1fb4b0);
+    --cj-turquesa-escuro: #127f7d;
+    --cj-borda: #dce8ed;
+    --cj-suave: #647d8b;
+    --cj-fundo-suave: #f6fafb;
+    --cj-destaque: #e7f6f4;
+}
+
+
+/* 02 — ABAS -------------------------------------------------- */
+
+.cj-abas {
+    display: flex;
+    gap: 6px;
+    margin: 20px 0 0;
+    padding: 5px;
+    border: 1px solid var(--cj-borda);
+    border-radius: 14px;
+    background: #fff;
+}
+
+.cj-aba {
+    flex: 1;
+    min-height: 44px;
+    padding: 10px 14px;
+    border: 0;
+    border-radius: 10px;
+    background: transparent;
+    color: var(--cj-suave);
+    font-weight: 800;
+    font-size: .88rem;
+}
+
+.cj-aba[aria-selected="true"] {
+    background: var(--cj-azul);
+    color: #fff;
+}
+
+.cj-aba:focus-visible {
+    outline: 2px solid var(--cj-turquesa);
+    outline-offset: 2px;
+}
+
+.cj-ajuda {
+    margin: 0;
+    color: var(--cj-suave);
+    font-size: .88rem;
+}
+
+
+/* 03 — CAMPOS E BOTÕES -------------------------------------- */
+
+.cj-campo {
+    width: 100%;
+    padding: 11px 13px;
+    border: 1px solid #cbdfe6;
+    border-radius: 11px;
+    background: #f9fcfd;
+    color: inherit;
+    font: inherit;
+}
+
+select.cj-campo {
+    min-height: 46px;
+}
+
+.cj-campo:focus {
+    outline: 2px solid var(--cj-turquesa);
+    outline-offset: 2px;
+}
+
+.campo textarea.cj-campo {
+    min-height: 70px;
+}
+
+.cj-botao {
+    align-self: flex-end;
+    min-height: 42px;
+    padding: 9px 16px;
+    border: 1px solid var(--cj-turquesa-escuro);
+    border-radius: 10px;
+    background: var(--cj-turquesa-escuro);
+    color: #fff;
+    font-weight: 800;
+    font-size: .84rem;
+}
+
+.cj-link {
+    padding: 4px 0;
+    border: 0;
+    background: none;
+    color: var(--cj-turquesa-escuro);
+    font-weight: 700;
+    font-size: .8rem;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.cj-link-perigo {
+    color: #a34450;
+}
+
+.cj-aviso {
+    margin: 14px 0;
+    padding: 12px 15px;
+    border-left: 4px solid var(--cj-turquesa);
+    border-radius: 8px;
+    background: var(--cj-destaque);
+    color: var(--cj-azul);
+    font-size: .86rem;
+}
+
+.cj-status {
+    margin: 6px 0;
+    color: var(--cj-suave);
+    font-size: .82rem;
+}
+
+.cj-status:empty {
+    display: none;
+}
+
+
+/* 04 — ENVIO DE ARQUIVOS ------------------------------------ */
+
+.cj-envio {
+    margin: 18px 0 8px;
+    padding: 18px;
+    border: 1px solid var(--cj-borda);
+    border-radius: 16px;
+    background: var(--cj-fundo-suave);
+}
+
+.cj-envio .campo {
+    margin: 14px 0;
+}
+
+.cj-zona {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: 26px 16px;
+    border: 2px dashed #b7d4da;
+    border-radius: 14px;
+    background: #fff;
+    color: var(--cj-suave);
+    text-align: center;
+    cursor: pointer;
+    transition: border-color .15s, background .15s;
+}
+
+.cj-zona:hover,
+.cj-zona-ativa {
+    border-color: var(--cj-turquesa);
+    background: var(--cj-destaque);
+}
+
+.cj-zona-preenchida {
+    border-style: solid;
+    border-color: var(--cj-turquesa-escuro);
+}
+
+.cj-zona:focus-within {
+    outline: 2px solid var(--cj-turquesa);
+    outline-offset: 2px;
+}
+
+/* O campo real fica invisível, mas acessível por teclado */
+.cj-zona-entrada {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.cj-zona-icone {
+    color: var(--cj-turquesa-escuro);
+    font-size: 1.6rem;
+    line-height: 1;
+}
+
+.cj-zona-texto {
+    font-size: .88rem;
+}
+
+.cj-zona-arquivo {
+    color: var(--cj-azul);
+    font-weight: 800;
+    font-size: .88rem;
+    overflow-wrap: anywhere;
+}
+
+.cj-progresso {
+    width: 100%;
+    height: 8px;
+    margin: 4px 0 14px;
+    accent-color: var(--cj-turquesa-escuro);
+}
+
+
+/* 05 — LISTA DE DOCUMENTOS ---------------------------------- */
+
+.cj-documentos {
+    display: grid;
+    gap: 10px;
+    margin: 12px 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.cj-documento {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 16px;
+    border: 1px solid var(--cj-borda);
+    border-radius: 14px;
+    background: #fff;
+}
+
+.cj-documento-icone {
+    display: grid;
+    place-items: center;
+    width: 46px;
+    height: 46px;
+    border-radius: 11px;
+    background: var(--cj-destaque);
+    color: var(--cj-turquesa-escuro);
+    font-weight: 900;
+    font-size: .7rem;
+    letter-spacing: .5px;
+}
+
+.cj-documento-info {
+    min-width: 0;
+}
+
+.cj-documento-titulo {
+    display: block;
+    color: var(--cj-azul);
+    overflow-wrap: anywhere;
+}
+
+.cj-documento-descricao {
+    margin: 3px 0;
+    color: #4c6775;
+    font-size: .86rem;
+}
+
+.cj-documento-meta {
+    color: var(--cj-suave);
+    font-size: .76rem;
+}
+
+.cj-documento-acoes {
+    display: flex;
+    gap: 8px;
+}
+
+
+/* 06 — COMENTÁRIOS ------------------------------------------ */
+
+.cj-comentarios {
+    margin-top: 16px;
+    padding-top: 12px;
+    border-top: 1px solid var(--cj-borda);
+}
+
+.cj-comentarios-alternar {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 40px;
+    padding: 8px 14px;
+    border: 1px solid #d0e3e6;
+    border-radius: 999px;
+    background: #edf7f7;
+    color: #166e70;
+    font-weight: 800;
+    font-size: .8rem;
+}
+
+.cj-comentarios-alternar::before {
+    content: "💬";
+    font-size: .9rem;
+}
+
+.cj-comentarios-alternar[aria-expanded="true"] {
+    background: var(--cj-azul);
+    border-color: var(--cj-azul);
+    color: #fff;
+}
+
+.cj-comentarios-corpo {
+    margin-top: 12px;
+}
+
+.cj-comentarios-lista {
+    display: grid;
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.cj-comentario {
+    display: flex;
+    gap: 10px;
+}
+
+.cj-avatar {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: var(--cj-azul);
+    color: #fff;
+    font-weight: 800;
+    font-size: .72rem;
+}
+
+.cj-comentario-conteudo {
+    flex: 1;
+    min-width: 0;
+    padding: 10px 13px;
+    border-radius: 4px 14px 14px 14px;
+    background: var(--cj-fundo-suave);
+    border: 1px solid var(--cj-borda);
+}
+
+.cj-comentario-topo {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 4px 10px;
+    color: var(--cj-azul);
+    font-size: .84rem;
+}
+
+.cj-data {
+    color: var(--cj-suave);
+    font-size: .72rem;
+}
+
+.cj-comentario-texto {
+    margin: 4px 0 0;
+    color: #3e5a68;
+    font-size: .9rem;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+.cj-comentario-form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.cj-comentario-form .cj-campo {
+    min-height: 64px;
+    resize: vertical;
+}
+
+
+/* 07 — MURAL ------------------------------------------------- */
+
+.cj-publicacao .cartao-identificacao strong {
+    font-size: .95rem;
+}
+
+.cj-publicacao .conteudo-comunicado {
+    margin: 14px 0 0;
+    font-size: .98rem;
+}
+
+.cj-publicacao .acoes-comunicado {
+    margin-top: 14px;
+    padding-top: 12px;
+}
+
+
+/* 08 — MODO DE DEMONSTRAÇÃO --------------------------------- */
+
+body[data-demonstracao="sim"]::before {
+    content: "MODO DE DEMONSTRAÇÃO — dados salvos só neste navegador";
+    display: block;
+    padding: 6px 12px;
+    background: #fff3cd;
+    color: #6b5200;
+    font: 700 .72rem/1.4 Arial, sans-serif;
+    text-align: center;
+    letter-spacing: .5px;
+}
+
+
+/* 09 — RESPONSIVIDADE --------------------------------------- */
+
+@media (max-width: 600px) {
+
+    .cj-documento {
+        grid-template-columns: auto 1fr;
+    }
+
+    .cj-documento-acoes {
+        grid-column: 1 / -1;
+    }
+
+    .cj-documento-acoes > button {
+        flex: 1;
+    }
+
+    .cj-envio {
+        padding: 14px;
+    }
+}

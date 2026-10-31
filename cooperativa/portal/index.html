@@ -1,0 +1,330 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <!-- CONFIGURAÇÕES GERAIS -->
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <meta name="robots" content="noindex, nofollow">
+
+    <meta name="description"
+          content="Portal COJURIS para manifestação de interesse e acesso de usuários cadastrados.">
+
+    <title>Portal do Cooperado | COJURIS</title>
+
+    <!-- FOLHA DE ESTILOS -->
+    <link rel="stylesheet" href="css/portal.css">
+    
+    <!-- CSS das notificações internas -->
+<link
+    rel="stylesheet"
+    href="./css/notificacoes.css"
+>
+
+</head>
+
+<body>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main class="portal-container">
+
+        
+<!-- IDENTIDADE MOBILE DA COJURIS -->
+
+<header class="mobile-hero">
+
+    <div class="mobile-brand">
+
+        <div class="mobile-brand-symbol" aria-hidden="true">
+            <span>✦</span>
+        </div>
+
+        <strong>COJURIS</strong>
+
+        <span class="mobile-brand-tag">
+            PORTAL DIGITAL
+        </span>
+
+    </div>
+
+    <div class="mobile-hero-content">
+
+        <span class="mobile-eyebrow">
+            CONECTADOS PELO DIREITO
+        </span>
+
+        <h2>
+            Seu próximo passo
+            <span>começa aqui.</span>
+        </h2>
+
+        <p>
+            Sua autonomia profissional.
+            Uma rede de oportunidades.
+        </p>
+
+        <div class="mobile-trust">
+            <span aria-hidden="true">✓</span>
+            Ambiente digital da COJURIS
+        </div>
+
+    </div>
+
+</header>
+
+
+        <!-- ==========================================
+             1. CADASTRO DE NOVOS INTERESSADOS
+             ========================================== -->
+
+        <section id="cadastro-box"
+                 aria-labelledby="cadastro-titulo">
+
+            <h1 id="cadastro-titulo">
+                Quero ser Cooperado
+            </h1>
+
+            <p class="intro">
+                Cadastre seu interesse em fazer parte
+                da COJURIS.
+            </p>
+
+            <form id="form-cadastro">
+
+                <!-- NOME COMPLETO -->
+                <div class="form-group">
+
+                    <label for="nome">
+                        Nome Completo
+                    </label>
+
+                    <input
+                        type="text"
+                        id="nome"
+                        name="nome"
+                        placeholder="Seu nome completo"
+                        autocomplete="name"
+                        maxlength="150"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- E-MAIL -->
+                <div class="form-group">
+
+                    <label for="email">
+                        E-mail Gmail
+                    </label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="seunome@gmail.com"
+                        autocomplete="email"
+                        inputmode="email"
+                        maxlength="254"
+                        required
+                    >
+
+                </div>
+
+              
+        <!-- DECLARAÇÃO PROFISSIONAL -->
+
+        <div class="form-group declaracao-profissional">
+
+            <label class="declaracao-label" for="declaracao-advogado">
+
+                <input
+                    type="checkbox"
+                    id="declaracao-advogado"
+                    name="declaracao-advogado"
+                    required
+                >
+
+                <span>
+                    Declaro, sob minha responsabilidade,
+                    que sou advogado(a) regularmente
+                    inscrito(a) na Ordem dos Advogados
+                    do Brasil (OAB), e que as informações
+                    prestadas são verdadeiras.
+                </span>
+
+            </label>
+
+            <p class="declaracao-aviso">
+                A declaração não representa verificação
+                da identidade profissional. A COJURIS
+                poderá solicitar comprovação posteriormente.
+            </p>
+
+        </div>
+
+
+
+                <!-- SENHA -->
+                <div class="form-group">
+
+                    <label for="senha">
+                        Crie uma Senha
+                    </label>
+
+                    <input
+                        type="password"
+                        id="senha"
+                        name="senha"
+                        placeholder="Mínimo de 6 caracteres"
+                        autocomplete="new-password"
+                        minlength="6"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- BOTÃO DE CADASTRO -->
+                <button
+                    type="submit"
+                    class="btn-form">
+
+                    Cadastrar Interesse
+
+                </button>
+
+            </form>
+
+
+            <!-- ALTERNAR PARA LOGIN -->
+            <button
+                type="button"
+                class="toggle-link">
+
+                Já tenho cadastro. Fazer Login.
+
+            </button>
+
+
+            <!-- MENSAGENS DO CADASTRO -->
+            <div
+                id="mensagem-cadastro"
+                class="mensagem hidden"
+                role="status"
+                aria-live="polite">
+            </div>
+
+        </section>
+
+
+
+        <!-- ==========================================
+             2. LOGIN DOS USUÁRIOS CADASTRADOS
+             ========================================== -->
+
+        <section id="login-box"
+                 class="hidden"
+                 aria-labelledby="login-titulo">
+
+            <h1 id="login-titulo">
+                Acessar Portal
+            </h1>
+
+            <p class="intro">
+                Entre com suas credenciais para
+                acompanhar sua manifestação de interesse.
+            </p>
+
+            <form id="form-login">
+
+                <!-- E-MAIL DE LOGIN -->
+                <div class="form-group">
+
+                    <label for="login-email">
+                        E-mail
+                    </label>
+
+                    <input
+                        type="email"
+                        id="login-email"
+                        name="login-email"
+                        placeholder="seunome@gmail.com"
+                        autocomplete="username"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- SENHA DE LOGIN -->
+                <div class="form-group">
+
+                    <label for="login-senha">
+                        Senha
+                    </label>
+
+                    <input
+                        type="password"
+                        id="login-senha"
+                        name="login-senha"
+                        placeholder="Sua senha"
+                        autocomplete="current-password"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- BOTÃO DE LOGIN -->
+                <button
+                    type="submit"
+                    class="btn-form">
+
+                    Entrar
+
+                </button>
+
+            </form>
+
+
+            <!-- ALTERNAR PARA CADASTRO -->
+            <button
+                type="button"
+                class="toggle-link">
+
+                Ainda não tenho cadastro.
+                Quero me associar.
+
+            </button>
+
+
+            <!-- MENSAGENS DO LOGIN -->
+            <div
+                id="mensagem-login"
+                class="mensagem hidden"
+                role="status"
+                aria-live="polite">
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- ==========================================
+         3. JAVASCRIPT DO PORTAL
+         ========================================== -->
+
+    <script
+        type="module"
+        src="./js/cadastro.js">
+    </script>
+
+</body>
+</html>
